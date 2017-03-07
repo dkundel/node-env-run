@@ -37,8 +37,21 @@ npm install node-env-run --global
 
 ## Usage 
 
+Add a new scripts entry to your `package.json`. Example:
+
+```json
+{
+  "scripts": {
+    "dev": "node-env-run .",
+    "test": "node-env-run -E test/.env test/test.js" 
+  }
+}
+```
+
+The arguments are the following:
+
 ```bash
-Usage: node env-run.js [options] [command] <script to execute>
+Usage: node-env-run [options] [command] <script to execute>
 
 Commands:
 
