@@ -1,0 +1,25 @@
+{
+  "name": "node-env-run",
+  "version": "1.0.0--alpha",
+  "repository": {
+    "url": "git@github.com:dkundel/node-env-run.git",
+    "type": "git"
+  },
+  "author": "Dominik Kundel <dominik.kundel@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "args": "^2.3.0",
+    "dotenv": "^4.0.0"
+  },
+  "bin": {
+    "node-env-run": "./bin/node-env-run.js"
+  },
+  "scripts": {
+    "test": "npm-run-all test:*",
+    "test:normal": "NODE_ENV=debug node ./bin/node-env-run.js test/test-no-force.js -E test/.env",
+    "test:force": "NODE_ENV=debug node ./bin/node-env-run.js test/test-force.js -E test/.env --force"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.0.2"
+  }
+}
