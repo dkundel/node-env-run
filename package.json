@@ -1,6 +1,6 @@
 {
   "name": "node-env-run",
-  "version": "1.0.0--alpha2",
+  "version": "1.0.0--beta",
   "description": "Wrapper executable to load env variables from .env and run Node",
   "repository": {
     "url": "git@github.com:dkundel/node-env-run.git",

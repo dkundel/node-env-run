@@ -61,7 +61,7 @@ const envContent = fs.readFileSync(path.resolve(cwd, flags.env));
 const envValues = dotenv.parse(envContent);
 
 const envKeys = Object.keys(envValues).filter(key => {
-  if (flags.force) {
+  if (flags.force && envValues[key]) {
     return true;
   }
 
