@@ -25,8 +25,7 @@
     "prepublish": "npm run tsc",
     "tsc": "tsc",
     "build": "npm run tsc",
-    "test": "jest",
-    "travis": "npm run build && npm run test"
+    "test": "jest"
   },
   "devDependencies": {
     "@types/jest": "^19.2.3",

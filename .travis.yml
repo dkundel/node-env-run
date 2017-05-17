@@ -11,6 +11,3 @@ cache:
   yarn: true
   directories:
     - 'node_modules'
-
-script:
-  - npm run travis
