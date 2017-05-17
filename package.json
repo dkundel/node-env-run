@@ -44,6 +44,7 @@
       "tsx",
       "js",
       "json"
-    ]
+    ],
+    "testPathIgnorePattern": ["<rootDir>/dist/", "<rootDir>/node_modules/"]
   }
 }
