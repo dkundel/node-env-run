@@ -1,0 +1,4 @@
+lib/
+__mocks__/
+bin/
+coverage/
