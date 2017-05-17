@@ -1,7 +1,3 @@
-:rotating_light: :rotating_light: :rotating_light: THIS IS CURRENTLY VERY EXPERIMENTAL! USE AT OWN RISK :rotating_light: :rotating_light: :rotating_light:
-
----
-
 # `node-env-run`
 ## Load env variables from `.env` and run Node
 
@@ -24,7 +20,7 @@ yarn add node-env-run --dev
 #### `npm`:
 
 ```bash
-npm install node-env-run --dev
+npm install node-env-run --save-dev
 ```
 
 ### Global:
@@ -51,20 +47,16 @@ Add a new scripts entry to your `package.json`. Example:
 The arguments are the following:
 
 ```bash
-Usage: node-env-run [options] [command] <script to execute>
-
-Commands:
-
-  help  Display help
+Usage: node-env-run [options] <file>
 
 Options:
 
-  -e, --encoding [value]  Encoding of the .env file (defaults to "utf8")
-  -E, --env [value]       Location of .env file relative from the current working directory (defaults to ".env")
-  -f, --force             Temporarily overrides existing env variables with the ones in the .env file
-  -h, --help              Output usage information
-  -v, --verbose           Enable verbose logging
-  -V, --version           Output the version number
+  -h, --help             output usage information
+  -V, --version          output the version number
+  -f, --force            Temporarily overrides existing env variables with the ones in the .env file
+  -E, --env [filePath]   Location of .env file relative from the current working directory
+  --verbose              Enable verbose logging
+  --encoding [encoding]  Encoding of the .env file
 ```
 
 This module uses under the hood the [`dotenv` module](https://www.npmjs.com/package/dotenv) to parse the `.env` file. For more information about how to structure your `.env` file, please refer to its [documentation](https://www.npmjs.com/package/dotenv#rules).
