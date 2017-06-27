@@ -8,32 +8,33 @@ console.error = jest.fn();
 import { resolve } from 'path';
 
 import { getScriptToExecute, setEnvironmentVariables } from '../utils';
-
-const cli = require('../cli');
+import { init, parseArgs } from '../cli';
 
 const __setScriptToExecute = require('../utils').__setScriptToExecute;
 const __setMockFiles = require('fs').__setMockFiles;
 
-const CMD = 'path/to/node node-env-run . --force';
+const CMD = 'path/to/node node-env-run . --force'.split(' ');
 
-describe('test command without necessary parameters', () => {
+describe('test command with missing env file', () => {
   beforeAll(() => {
     __setMockFiles({});
     __setScriptToExecute('./main.js');
 
-    process.argv = CMD.split(' ');
     process.env['TEST_PREDEFINED']='servus';
   });
 
   test('returns null', () => {
-    const scriptToExecute = cli();
-    expect(scriptToExecute).toBeNull();
+    const cli = init(parseArgs(CMD));
+    expect(cli.isRepl).toBeFalsy();
+    if (cli.isRepl === false) {
+      expect(cli.error).not.toBeUndefined();
+      expect(cli.script).toBeUndefined();
+    }
   })
 
   test('has called the right functions', () => {
     expect(setEnvironmentVariables).toHaveBeenCalledTimes(0);
-    expect(getScriptToExecute).toHaveBeenCalledTimes(1);
-    expect(getScriptToExecute).toHaveBeenCalledWith('.', process.cwd());
+    expect(getScriptToExecute).toHaveBeenCalledTimes(0);
   });
 
   afterAll(() => {

@@ -26,6 +26,7 @@ export function getScriptToExecute(script: string, cwd: string): string | null {
   } else {
     script = resolve(cwd, script);
   }
+
   return script;
 }
 

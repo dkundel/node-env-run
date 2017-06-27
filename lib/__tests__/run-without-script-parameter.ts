@@ -8,30 +8,31 @@ console.error = jest.fn();
 import { resolve } from 'path';
 
 import { getScriptToExecute, setEnvironmentVariables } from '../utils';
-
-const cli = require('../cli');
+import { init, parseArgs } from '../cli';
 
 const __setScriptToExecute = require('../utils').__setScriptToExecute;
 const __setMockFiles = require('fs').__setMockFiles;
+const ENV_FILE_PATH = resolve(process.cwd(), '.env');
+const FILES: { [key: string]: string } = {};
+FILES[ENV_FILE_PATH] = '#SOMETHING';
 
-const CMD = 'path/to/node node-env-run --force';
+const CMD = 'path/to/node node-env-run --force'.split(' ');
 
-describe('test command without necessary parameters', () => {
+describe('test command without script parameter', () => {
   beforeAll(() => {
+    __setMockFiles(FILES;)
     __setScriptToExecute('./main.js');
 
-    process.argv = CMD.split(' ');
     process.env['TEST_PREDEFINED']='servus';
   });
 
   test('returns null', () => {
-    const scriptToExecute = cli();
-    expect(scriptToExecute).toBeNull();
-    expect(console.error).toHaveBeenCalledWith('You need to specify a script to run or alternatively "." to run the script specified in "main" in your "package.json"');
+    const cli = init(parseArgs(CMD));
+    expect(cli.isRepl).toBeTruthy();
   })
 
   test('has called the right functions', () => {
-    expect(setEnvironmentVariables).toHaveBeenCalledTimes(0);
+    expect(setEnvironmentVariables).toHaveBeenCalledTimes(1);
     expect(getScriptToExecute).toHaveBeenCalledTimes(0);
   });
 

@@ -1,5 +1,3 @@
-type Optional<T> = T | undefined;
-
 import * as fs from 'fs';
 import * as path from 'path';
 import * as program from 'commander';
@@ -8,40 +6,45 @@ import * as Debug from 'debug';
 
 import { getScriptToExecute, EnvironmentDictionary, setEnvironmentVariables } from './utils';
 
+const { version } = require('../../package.json');
+
+export type CommanderProgram = typeof program;
+export type CliArgs = {
+  program: CommanderProgram;
+  script: string | undefined;
+}
+
+export type Cli = 
+  | { isRepl: true }
+  | { isRepl: false, error?: Error, script?: string };
+
 const debug = Debug('node-env-run');
 const cwd = process.cwd();
 
-module.exports = function (): string | null {
-  let passedScript: Optional<string> = '';
-
+export function parseArgs(argv: string[]): CliArgs {
+  let script: string | undefined;
+  
   program
-    .version('1.0.0')
+    .version(version)
     .arguments('<file>')
     .action((file: string) => {
-      passedScript = file;
+      script = file;
     })
     .option('-f, --force', 'Temporarily overrides existing env variables with the ones in the .env file')
     .option('-E, --env [filePath]', 'Location of .env file relative from the current working directory', '.env')
     .option('--verbose', 'Enable verbose logging')
     .option('--encoding [encoding]', 'Encoding of the .env file', 'utf8');
 
-  program.parse(process.argv);
+  program.parse(argv);
 
-  if (program.args.length === 0 || !passedScript) {
-    console.error('You need to specify a script to run or alternatively "." to run the script specified in "main" in your "package.json"');
-    return null;
-  }
+  return { program, script };
+}
 
-  let scriptToExecute = getScriptToExecute(passedScript, cwd);
-  if (scriptToExecute === null) {
-    console.error('Failed to determine script to execute');
-    return null;
-  }
-
+export function init({ program, script }: CliArgs): Cli {
   const envFilePath = path.resolve(cwd, program.env);
   if (!fs.existsSync(envFilePath)) {
-    console.error(`Could not find the .env file under: "${envFilePath}"`);
-    return null;
+    const error = new Error(`Could not find the .env file under: "${envFilePath}"`);
+    return { isRepl: false, error };
   }
 
   debug('Reading .env file');
@@ -50,5 +53,15 @@ module.exports = function (): string | null {
 
   setEnvironmentVariables(envValues, program.force);
 
-  return scriptToExecute;
+  if (program.args.length === 0 || !script) {
+    return { isRepl: true };
+  }
+
+  let scriptToExecute = getScriptToExecute(script, cwd);
+  if (scriptToExecute === null || !fs.existsSync(scriptToExecute)) {
+    const error = new Error('Failed to determine script to execute');
+    return { isRepl: false, error };
+  }
+
+  return { isRepl: false, script: scriptToExecute };
 }
