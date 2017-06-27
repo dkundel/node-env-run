@@ -6,8 +6,6 @@ import * as Debug from 'debug';
 
 import { getScriptToExecute, EnvironmentDictionary, setEnvironmentVariables } from './utils';
 
-const { version } = require('../../package.json');
-
 export type CommanderProgram = typeof program;
 export type CliArgs = {
   program: CommanderProgram;
@@ -25,7 +23,7 @@ export function parseArgs(argv: string[]): CliArgs {
   let script: string | undefined;
   
   program
-    .version(version)
+    .version('1.0.1')
     .arguments('<file>')
     .action((file: string) => {
       script = file;
