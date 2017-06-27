@@ -55,3 +55,8 @@ export function setEnvironmentVariables(readValues: EnvironmentDictionary, force
 
   debug(`Set the env variables: ${envKeysToSet.map(k => `"${k}"`).join(',')}`);
 }
+
+export function constructNewArgv(currentArgv: string[], script: string, newArguments: string): string[] {
+  const [node] = currentArgv;
+  return [node, script, ...newArguments.split(' ')];
+}

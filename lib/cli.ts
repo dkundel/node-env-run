@@ -31,7 +31,8 @@ export function parseArgs(argv: string[]): CliArgs {
     .option('-f, --force', 'Temporarily overrides existing env variables with the ones in the .env file')
     .option('-E, --env [filePath]', 'Location of .env file relative from the current working directory', '.env')
     .option('--verbose', 'Enable verbose logging')
-    .option('--encoding [encoding]', 'Encoding of the .env file', 'utf8');
+    .option('--encoding [encoding]', 'Encoding of the .env file', 'utf8')
+    .option('-a, --newArguments [args]', 'Arguments that should be passed to the script. Wrap in quotes.', '');
 
   program.parse(argv);
 
