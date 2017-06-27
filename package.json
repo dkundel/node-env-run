@@ -18,6 +18,7 @@
     "dotenv": "^4.0.0"
   },
   "bin": {
+    "nodenv": "./dist/bin/node-env-run.js",
     "node-env-run": "./dist/bin/node-env-run.js"
   },
   "types": "./dist/bin/node-env-run.d.ts",
