@@ -1,6 +1,6 @@
 {
   "name": "node-env-run",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Wrapper executable to load env variables from .env and run Node",
   "repository": {
     "url": "git@github.com:dkundel/node-env-run.git",
@@ -46,6 +46,9 @@
       "json",
       "js"
     ],
-    "testPathIgnorePatterns": ["<rootDir>/dist/", "<rootDir>/node_modules/"]
+    "testPathIgnorePatterns": [
+      "<rootDir>/dist/",
+      "<rootDir>/node_modules/"
+    ]
   }
 }
