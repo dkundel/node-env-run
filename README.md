@@ -38,8 +38,8 @@ Add a new scripts entry to your `package.json`. Example:
 ```json
 {
   "scripts": {
-    "dev": "node-env-run .",
-    "test": "node-env-run -E test/.env test/test.js" 
+    "dev": "nodenv .",
+    "test": "nodenv -E test/.env test/test.js" 
   }
 }
 ```
@@ -47,7 +47,7 @@ Add a new scripts entry to your `package.json`. Example:
 The arguments are the following:
 
 ```bash
-Usage: node-env-run [options] <file>
+Usage: nodenv [options] <file>
 
 Options:
 
