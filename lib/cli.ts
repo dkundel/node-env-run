@@ -23,7 +23,7 @@ export function parseArgs(argv: string[]): CliArgs {
   let script: string | undefined;
   
   program
-    .version('1.0.1')
+    .version('2.0.1')
     .arguments('<file>')
     .action((file: string) => {
       script = file;
