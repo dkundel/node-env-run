@@ -27,6 +27,8 @@
     "prepublish": "npm run tsc",
     "tsc": "tsc",
     "build": "npm run tsc",
+    "lint": "eslint \"!(node_modules)/**/*.ts\"",
+    "pretest": "npm run lint",
     "test": "jest",
     "release:patch": "npm version patch -m \":bookmark: Release v%s\"",
     "release:minor": "npm version minor -m \":bookmark: Release v%s\"",
@@ -34,10 +36,20 @@
   },
   "devDependencies": {
     "@types/jest": "^19.2.3",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-typescript": "^1.0.2",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jest": "^21.15.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-typescript": "^0.10.0",
     "jest": "^20.0.3",
     "npm-run-all": "^4.0.2",
+    "prettier": "^1.11.1",
     "ts-jest": "^20.0.3",
-    "typescript": "^2.3.2"
+    "typescript": "^2.7.2",
+    "typescript-eslint-parser": "^14.0.0"
   },
   "jest": {
     "transform": {
