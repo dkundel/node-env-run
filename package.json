@@ -1,7 +1,8 @@
 {
   "name": "node-env-run",
   "version": "2.0.1",
-  "description": "Wrapper executable to load env variables from .env and run Node",
+  "description":
+    "Wrapper executable to load env variables from .env and run Node",
   "repository": {
     "url": "git@github.com:dkundel/node-env-run.git",
     "type": "git"
@@ -26,7 +27,10 @@
     "prepublish": "npm run tsc",
     "tsc": "tsc",
     "build": "npm run tsc",
-    "test": "jest"
+    "test": "jest",
+    "release:patch": "npm version patch -m \":bookmark: Release v%s\"",
+    "release:minor": "npm version minor -m \":bookmark: Release v%s\"",
+    "release:major": "npm version major -m \":bookmark: Release v%s\""
   },
   "devDependencies": {
     "@types/jest": "^19.2.3",
@@ -40,15 +44,7 @@
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "json",
-      "js"
-    ],
-    "testPathIgnorePatterns": [
-      "<rootDir>/dist/",
-      "<rootDir>/node_modules/"
-    ]
+    "moduleFileExtensions": ["ts", "tsx", "json", "js"],
+    "testPathIgnorePatterns": ["<rootDir>/dist/", "<rootDir>/node_modules/"]
   }
 }
