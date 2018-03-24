@@ -21,13 +21,14 @@
       }
     ],
     "prefer-const": "error",
-    "valid-jsdoc": "off"
+    "import/no-dynamic-require": "off"
   },
   "overrides": [
     {
-      "files": ["src/__tests__/**/*.ts"],
+      "files": ["lib/__{tests,mocks}__/**/*.ts"],
       "rules": {
-        "require-jsdoc": "off"
+        "require-jsdoc": "off",
+        "import/first": "off"
       }
     }
   ],
