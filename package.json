@@ -15,7 +15,8 @@
     "@types/node": "^7.0.18",
     "commander": "^2.9.0",
     "debug": "^2.6.7",
-    "dotenv": "^4.0.0"
+    "dotenv": "^4.0.0",
+    "pkginfo": "^0.4.1"
   },
   "bin": {
     "nodenv": "./dist/bin/node-env-run.js",
