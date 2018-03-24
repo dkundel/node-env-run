@@ -27,7 +27,7 @@ describe('test command in force mode', () => {
     __setMockFiles(FILES);
     __setScriptToExecute('./main.js');
 
-    process.env['TEST_PREDEFINED']='servus';
+    process.env['TEST_PREDEFINED'] = 'servus';
   });
 
   test('returns the right script to execute', () => {
@@ -37,15 +37,18 @@ describe('test command in force mode', () => {
       expect(cli.script).toBe('./main.js');
       expect(cli.error).toBeUndefined();
     }
-  })
+  });
 
   test('has called the right functions', () => {
-    expect(setEnvironmentVariables).toHaveBeenCalledWith({
-      TEST_STRING: 'hello',
-      TEST_EMPTY: '',
-      TEST_NUMBER: '42',
-      TEST_PREDEFINED: 'moin'
-    }, undefined);
+    expect(setEnvironmentVariables).toHaveBeenCalledWith(
+      {
+        TEST_STRING: 'hello',
+        TEST_EMPTY: '',
+        TEST_NUMBER: '42',
+        TEST_PREDEFINED: 'moin',
+      },
+      undefined
+    );
     expect(getScriptToExecute).toHaveBeenCalledWith('.', process.cwd());
   });
 

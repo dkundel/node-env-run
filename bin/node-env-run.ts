@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
 import * as Debug from 'debug';
+import { start } from 'repl';
+
 import { init, parseArgs } from '../lib/cli';
 import { constructNewArgv } from '../lib/utils';
-import { start } from 'repl';
 
 const debug = Debug('node-env-run');
 
@@ -14,7 +15,11 @@ const cli = init(args);
 if (cli.isRepl) {
   start({});
 } else if (cli.script !== undefined) {
-  const argv = constructNewArgv(process.argv, cli.script, args.program.newArguments);
+  const argv = constructNewArgv(
+    process.argv,
+    cli.script,
+    args.program.newArguments
+  );
   debug(`Overriding process.argv with the following arguments: [${argv}]`);
   process.argv = argv;
   debug(`Execute script: ${cli.script}`);

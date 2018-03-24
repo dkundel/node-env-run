@@ -29,7 +29,7 @@ describe('test command without necessary parameters', () => {
   beforeAll(() => {
     __setScriptToExecute(null);
     __setMockFiles(FILES);
-    process.env['TEST_PREDEFINED']='servus';
+    process.env['TEST_PREDEFINED'] = 'servus';
   });
 
   test('returns null', () => {
@@ -38,12 +38,15 @@ describe('test command without necessary parameters', () => {
     if (cli.isRepl === false) {
       expect(cli.error.message).toBe('Failed to determine script to execute');
     }
-  })
+  });
 
   test('has called the right functions', () => {
     expect(setEnvironmentVariables).toHaveBeenCalledTimes(1);
     expect(getScriptToExecute).toHaveBeenCalledTimes(1);
-    expect(getScriptToExecute).toHaveBeenCalledWith('foo-bar-bla.js', process.cwd());
+    expect(getScriptToExecute).toHaveBeenCalledWith(
+      'foo-bar-bla.js',
+      process.cwd()
+    );
   });
 
   afterAll(() => {

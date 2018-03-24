@@ -20,7 +20,7 @@ describe('test command with missing env file', () => {
     __setMockFiles({});
     __setScriptToExecute('./main.js');
 
-    process.env['TEST_PREDEFINED']='servus';
+    process.env['TEST_PREDEFINED'] = 'servus';
   });
 
   test('returns null', () => {
@@ -30,7 +30,7 @@ describe('test command with missing env file', () => {
       expect(cli.error).not.toBeUndefined();
       expect(cli.script).toBeUndefined();
     }
-  })
+  });
 
   test('has called the right functions', () => {
     expect(setEnvironmentVariables).toHaveBeenCalledTimes(0);
