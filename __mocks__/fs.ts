@@ -1,10 +1,11 @@
 import * as path from 'path';
 
-type Dictionary<T> = {[key: string]: T};
+type Dictionary<T> = { [key: string]: T };
 type FileContentDict = Dictionary<string>;
 type DirectoryListing = Dictionary<string[]>;
 
 const fs: any = jest.genMockFromModule('fs');
+const originalFs = require.requireActual('fs');
 
 let mockFiles: DirectoryListing = {};
 let allMockFiles: FileContentDict = {};
@@ -28,20 +29,22 @@ function readdirSync(directoryPath: string): string[] {
   return [];
 }
 
-function readFileSync(filePath: string): string {
+function readFileSync(...args: any[]): string {
+  const filePath = args[0] as string;
   if (allMockFiles[filePath]) {
     return allMockFiles[filePath];
   }
-  return '';
+  return originalFs.readFileSync(...args);
 }
 
 function existsSync(filePath: string): boolean {
-  return (typeof allMockFiles[filePath] !== 'undefined');
+  return typeof allMockFiles[filePath] !== 'undefined';
 }
 
-fs.__setMockFiles = __setMockFiles;
-fs.readFileSync = readFileSync;
-fs.readdirSync = readdirSync;
-fs.existsSync = existsSync;
-
-module.exports = fs;
+module.exports = {
+  ...fs,
+  readFileSync,
+  readdirSync,
+  existsSync,
+  __setMockFiles,
+};
