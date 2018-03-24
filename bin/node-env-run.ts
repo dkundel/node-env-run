@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { spawn } from 'child_process';
 import * as Debug from 'debug';
 import { start } from 'repl';
 
@@ -15,15 +16,20 @@ const cli = init(args);
 if (cli.isRepl) {
   start({});
 } else if (cli.script !== undefined) {
-  const argv = constructNewArgv(
-    process.argv,
-    cli.script,
-    args.program.newArguments
-  );
-  debug(`Overriding process.argv with the following arguments: [${argv}]`);
-  process.argv = argv;
-  debug(`Execute script: ${cli.script}`);
-  require(cli.script);
+  const shell: string | boolean = process.env.SHELL || true;
+  const cmd = args.program.exec;
+  const cmd_args = [cli.script, ...args.program.newArguments.split(' ')];
+  debug(`Execute command: ${cmd}`);
+  debug(`Using arguments: ${cmd_args}`);
+  debug(`Using shell: ${shell}`);
+  const child = spawn(cmd, cmd_args, {
+    shell,
+    stdio: 'inherit',
+    env: process.env,
+  });
+  child.on('close', code => {
+    process.exit(code);
+  });
 } else {
   console.error(cli.error);
   process.exit(1);

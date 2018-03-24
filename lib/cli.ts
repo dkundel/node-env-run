@@ -18,6 +18,7 @@ export interface CliOptions extends CommanderStatic {
   verbose: boolean;
   encoding: string;
   newArguments: string;
+  exec: string;
 }
 
 export type CliArgs = {
@@ -62,6 +63,11 @@ export function parseArgs(argv: string[]): CliArgs {
       '-a, --newArguments [args]',
       'Arguments that should be passed to the script. Wrap in quotes.',
       ''
+    )
+    .option(
+      '-e, --exec [cmd]',
+      'The command to execute the script with',
+      'node'
     );
 
   const result = program.parse(argv) as CliOptions;
