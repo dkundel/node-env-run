@@ -1,10 +1,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as program from 'commander';
-import { CommanderStatic } from 'commander';
+import * as yargs from 'yargs';
 import * as dotenv from 'dotenv';
 import * as Debug from 'debug';
 import * as pkginfo from 'pkginfo';
+import { stripIndent, stripIndentTransformer } from 'common-tags';
 
 import {
   getScriptToExecute,
@@ -12,13 +12,14 @@ import {
   setEnvironmentVariables,
 } from './utils';
 
-export interface CliOptions extends CommanderStatic {
+export interface CliOptions extends yargs.Arguments {
   force: boolean;
   env: string;
   verbose: boolean;
   encoding: string;
-  newArguments: string;
   exec: string;
+  script: string;
+  newArguments: string[];
 }
 
 export type CliArgs = {
@@ -27,12 +28,20 @@ export type CliArgs = {
 };
 
 export type Cli =
-  | { isRepl: true }
+  | { isRepl: true; node: boolean }
   | { isRepl: false; error?: Error; script?: string };
 
 const debug = Debug('node-env-run');
 const cwd = process.cwd();
 const pkg = pkginfo(module);
+
+const usageDescription = stripIndent`
+  Runs the given script with set environment variables. 
+  * If no script is passed it will run the REPL instead.
+  * If '.' is passed it will read the package.json and execute the 'main' file.
+
+  Pass additional arguments to the script after the "--"
+`;
 
 /**
  * Parses a list of arguments and turns them into an object using Commander
@@ -42,35 +51,62 @@ const pkg = pkginfo(module);
 export function parseArgs(argv: string[]): CliArgs {
   let script: string | undefined;
 
-  program
-    .version(pkg.version)
-    .arguments('<file>')
-    .action((file: string) => {
-      script = file;
+  const result = yargs
+    .usage('$0 [script]', usageDescription, yargs => {
+      yargs.positional('script', {
+        describe: 'the file that should be executed',
+        type: 'string',
+      });
+      yargs.example('$0 --exec "python"', 'Runs the Python REPL instead');
+      yargs.example(
+        '$0 server.js --exec "nodemon"',
+        'Runs "nodemon server.js"'
+      );
+      yargs.example(
+        '$0 someScript.js -- --inspect',
+        'Run script with --inspect'
+      );
+      return yargs;
     })
-    .option(
-      '-f, --force',
-      'Temporarily overrides existing env variables with the ones in the .env file'
-    )
-    .option(
-      '-E, --env [filePath]',
-      'Location of .env file relative from the current working directory',
-      '.env'
-    )
-    .option('--verbose', 'Enable verbose logging')
-    .option('--encoding [encoding]', 'Encoding of the .env file', 'utf8')
-    .option(
-      '-a, --newArguments [args]',
-      'Arguments that should be passed to the script. Wrap in quotes.',
-      ''
-    )
-    .option(
-      '-e, --exec [cmd]',
-      'The command to execute the script with',
-      'node'
-    );
+    .option('force', {
+      alias: 'f',
+      demandOption: false,
+      describe:
+        'temporarily overrides existing env variables with the ones in the .env file',
+    })
+    .option('env', {
+      alias: 'E',
+      demandOption: false,
+      describe:
+        'location of .env file relative from the current working directory',
+      default: '.env',
+      type: 'string',
+    })
+    .option('verbose', {
+      demandOption: false,
+      describe: 'enable verbose logging',
+      type: 'boolean',
+    })
+    .option('encoding', {
+      demandOption: false,
+      describe: 'encoding of the .env file',
+      default: 'utf8',
+      type: 'string',
+    })
+    .option('exec', {
+      alias: 'e',
+      demandOption: false,
+      describe: 'the command to execute the script with',
+      default: 'node',
+    })
+    .showHelpOnFail(true)
+    .help('help')
+    .strict()
+    .version()
+    .parse(argv.slice(2)) as CliOptions;
 
-  const result = program.parse(argv) as CliOptions;
+  script = result.script;
+  result.newArguments = result._;
 
   return { program: result, script };
 }
@@ -99,8 +135,9 @@ export function init(args: CliArgs): Cli {
 
   setEnvironmentVariables(envValues, program.force);
 
-  if (program.args.length === 0 || !script) {
-    return { isRepl: true };
+  if (!script) {
+    const node = args.program.exec === undefined;
+    return { isRepl: true, node };
   }
 
   const scriptToExecute = getScriptToExecute(script, cwd);
