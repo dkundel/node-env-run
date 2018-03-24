@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as program from 'commander';
+import { CommanderStatic } from 'commander';
 import * as dotenv from 'dotenv';
 import * as Debug from 'debug';
 
@@ -10,9 +11,16 @@ import {
   setEnvironmentVariables,
 } from './utils';
 
-export type CommanderProgram = typeof program;
+export interface CliOptions extends CommanderStatic {
+  force: boolean;
+  env: string;
+  verbose: boolean;
+  encoding: string;
+  newArguments: string;
+}
+
 export type CliArgs = {
-  program: CommanderProgram;
+  program: CliOptions;
   script: string | undefined;
 };
 
@@ -54,9 +62,9 @@ export function parseArgs(argv: string[]): CliArgs {
       ''
     );
 
-  program.parse(argv);
+  const result = program.parse(argv) as CliOptions;
 
-  return { program, script };
+  return { program: result, script };
 }
 
 /**
