@@ -4,6 +4,7 @@ import * as program from 'commander';
 import { CommanderStatic } from 'commander';
 import * as dotenv from 'dotenv';
 import * as Debug from 'debug';
+import * as pkginfo from 'pkginfo';
 
 import {
   getScriptToExecute,
@@ -30,6 +31,7 @@ export type Cli =
 
 const debug = Debug('node-env-run');
 const cwd = process.cwd();
+const pkg = pkginfo(module);
 
 /**
  * Parses a list of arguments and turns them into an object using Commander
@@ -40,7 +42,7 @@ export function parseArgs(argv: string[]): CliArgs {
   let script: string | undefined;
 
   program
-    .version('2.0.1')
+    .version(pkg.version)
     .arguments('<file>')
     .action((file: string) => {
       script = file;
