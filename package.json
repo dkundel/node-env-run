@@ -13,10 +13,12 @@
     "@types/debug": "^0.0.29",
     "@types/dotenv": "^4.0.0",
     "@types/node": "^7.0.18",
+    "@types/yargs": "^11.0.0",
     "commander": "^2.9.0",
     "debug": "^2.6.7",
     "dotenv": "^4.0.0",
-    "pkginfo": "^0.4.1"
+    "pkginfo": "^0.4.1",
+    "yargs": "^11.0.0"
   },
   "bin": {
     "nodenv": "./dist/bin/node-env-run.js",
