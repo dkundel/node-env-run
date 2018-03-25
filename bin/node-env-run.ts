@@ -15,7 +15,7 @@ const debug = Debug('node-env-run');
  * @param  {string} cmd The command to execute
  * @param  {string[]} cmdArgs An array of arguments to pass to the command
  * @param  {boolean} shouldExit Whether the parent process should finish when child finishes
- * @returns void
+ * @returns {void}
  */
 function runCommand(
   cmd: string,

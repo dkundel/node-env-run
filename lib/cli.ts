@@ -49,8 +49,6 @@ const usageDescription = stripIndent`
  * @returns {CliArgs} The parsed configuration
  */
 export function parseArgs(argv: string[]): CliArgs {
-  let script: string | undefined;
-
   const result = yargs
     .usage('$0 [script]', usageDescription, yargs => {
       yargs.positional('script', {
@@ -105,7 +103,7 @@ export function parseArgs(argv: string[]): CliArgs {
     .version()
     .parse(argv.slice(2)) as CliOptions;
 
-  script = result.script;
+  const script: string | undefined = result.script;
   result.newArguments = result._;
 
   return { program: result, script };

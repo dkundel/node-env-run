@@ -1,3 +1,4 @@
+/* eslint-disable */
 declare module 'pkginfo' {
   namespace pkginfo {
     export interface Info {
@@ -10,3 +11,4 @@ declare module 'pkginfo' {
 
   export = pkginfo;
 }
+/* eslint-enable */
