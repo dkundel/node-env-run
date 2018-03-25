@@ -26,6 +26,8 @@
   },
   "types": "./dist/bin/node-env-run.d.ts",
   "scripts": {
+    "contrib:generate": "all-contributors generate",
+    "contrib:add": "all-contributors add",
     "prepublish": "npm run tsc",
     "tsc": "tsc",
     "build": "npm run tsc",
@@ -38,6 +40,7 @@
   },
   "devDependencies": {
     "@types/jest": "^19.2.3",
+    "all-contributors-cli": "^4.11.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.9.0",
