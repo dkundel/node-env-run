@@ -2,7 +2,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 <p align="center">
-<img alt="node-env-run logo" title="node-env-run" src="https://cdn.rawgit.com/dkundel/node-env-run/73ba426f/assets/node-env-run-logo.png" height="200">
+<img alt="node-env-run logo" title="node-env-run" src="https://cdn.rawgit.com/dkundel/node-env-run/01461b3a/assets/node-env-run-logo.png" height="200">
 </p>
 
 # node-env-run
