@@ -6,6 +6,13 @@
     "url": "git@github.com:dkundel/node-env-run.git",
     "type": "git"
   },
+  "keywords": [
+    "dotenv",
+    "environment",
+    "variables",
+    "env",
+    ".env"
+  ],
   "author": "Dominik Kundel <dominik.kundel@gmail.com>",
   "license": "MIT",
   "dependencies": {
