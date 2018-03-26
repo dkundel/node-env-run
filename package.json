@@ -11,7 +11,9 @@
     "environment",
     "variables",
     "env",
-    ".env"
+    ".env",
+    "config",
+    "settings"
   ],
   "author": "Dominik Kundel <dominik.kundel@gmail.com>",
   "license": "MIT",
