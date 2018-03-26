@@ -14,7 +14,7 @@
 * Flexible command to execute
 * Let's you override existing environment variables
 
----
+<p align="center"><img alt="node-env-run example screenshot. Code below in Documentation section" src="https://cdn.rawgit.com/dkundel/node-env-run/5bc67d1a/assets/node-env-run-screenshot.png" height="350"/></p>
 
 ## Installation
 
