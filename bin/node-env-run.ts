@@ -51,7 +51,7 @@ if (cli.isRepl) {
 } else if (cli.script !== undefined) {
   const cmd = args.program.exec;
   const cmdArgs = [cli.script, ...args.program.newArguments];
-  runCommand(args.program.exec, []);
+  runCommand(args.program.exec, cmdArgs);
 } else {
   console.error(cli.error);
   process.exit(1);
