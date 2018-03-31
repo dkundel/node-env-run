@@ -1,7 +1,3 @@
 {
-  "extends": [
-    "@dkundel",
-    "@dkundel/eslint-config/typescript",
-    "@dkundel/eslint-config/jest"
-  ]
+  "extends": ["@dkundel/js", "@dkundel/ts", "@dkundel/js/jest"]
 }
