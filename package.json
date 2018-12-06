@@ -24,7 +24,7 @@
     "@types/node": "^7.0.18",
     "@types/yargs": "^11.0.0",
     "common-tags": "^1.7.2",
-    "debug": "^2.6.7",
+    "debug": "^2.6.9",
     "dotenv": "^4.0.0",
     "pkginfo": "^0.4.1",
     "yargs": "^11.0.0"
