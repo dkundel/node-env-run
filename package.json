@@ -27,7 +27,7 @@
     "debug": "^2.6.9",
     "dotenv": "^4.0.0",
     "pkginfo": "^0.4.1",
-    "yargs": "^11.0.0"
+    "yargs": "^12.0.2"
   },
   "bin": {
     "nodenv": "./dist/bin/node-env-run.js",
