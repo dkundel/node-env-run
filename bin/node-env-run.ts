@@ -32,7 +32,7 @@ function runCommand(
     stdio: 'inherit',
     env: process.env,
   });
-  child.on('close', code => {
+  child.on('exit', code => {
     debug(`Child process exit with code ${code}`);
     process.exit(code);
   });
