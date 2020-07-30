@@ -13,14 +13,9 @@ const debug = Debug('node-env-run');
  * IMPORTANT: By default it will exit the process when child process exits
  * @param  {string} cmd The command to execute
  * @param  {string[]} cmdArgs An array of arguments to pass to the command
- * @param  {boolean} shouldExit Whether the parent process should finish when child finishes
  * @returns {void}
  */
-function runCommand(
-  cmd: string,
-  cmdArgs: string[],
-  shouldExit: boolean = true
-): void {
+function runCommand(cmd: string, cmdArgs: string[]): void {
   const shell: string | boolean = process.env.SHELL || true;
 
   debug(`Execute command: "${cmd}"`);

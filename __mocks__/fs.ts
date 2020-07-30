@@ -5,7 +5,7 @@ type FileContentDict = Dictionary<string>;
 type DirectoryListing = Dictionary<string[]>;
 
 const fs: any = jest.genMockFromModule('fs');
-const originalFs = require.requireActual('fs');
+const originalFs = jest.requireActual('fs');
 
 let mockFiles: DirectoryListing = {};
 let allMockFiles: FileContentDict = {};

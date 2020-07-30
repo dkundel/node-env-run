@@ -3,7 +3,6 @@ import * as Debug from 'debug';
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as pkginfo from 'pkginfo';
 import * as yargs from 'yargs';
 import {
   EnvironmentDictionary,
@@ -32,7 +31,6 @@ export type Cli =
 
 const debug = Debug('node-env-run');
 const cwd = process.cwd();
-const pkg = pkginfo(module);
 
 const usageDescription = stripIndent`
   Runs the given script with set environment variables. 
@@ -49,7 +47,7 @@ const usageDescription = stripIndent`
  */
 export function parseArgs(argv: string[]): CliArgs {
   const result = yargs
-    .usage('$0 [script]', usageDescription, yargs => {
+    .usage('$0 [script]', usageDescription, (yargs) => {
       yargs.positional('script', {
         describe: 'the file that should be executed',
         type: 'string',
