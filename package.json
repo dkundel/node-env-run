@@ -19,16 +19,16 @@
   "license": "MIT",
   "dependencies": {
     "@types/common-tags": "^1.4.0",
-    "@types/debug": "^0.0.29",
-    "@types/dotenv": "^4.0.0",
+    "@types/debug": "^4.1.5",
+    "@types/dotenv": "^8.2.0",
     "@types/node": "^10.17.28",
-    "@types/yargs": "^11.0.0",
+    "@types/yargs": "^15.0.5",
     "common-tags": "^1.7.2",
     "cross-spawn": "^7.0.3",
-    "debug": "^2.6.9",
-    "dotenv": "^4.0.0",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
     "pkginfo": "^0.4.1",
-    "yargs": "^13.1.0"
+    "yargs": "^15.4.1"
   },
   "bin": {
     "nodenv": "./dist/bin/node-env-run.js",
@@ -49,13 +49,13 @@
     "@dkundel/eslint-config-js": "^2.0.0",
     "@dkundel/eslint-config-ts": "^2.0.0",
     "@types/cross-spawn": "^6.0.2",
-    "@types/jest": "^19.2.3",
-    "all-contributors-cli": "^4.11.1",
-    "eslint": "^4.19.1",
-    "jest": "^20.0.4",
+    "@types/jest": "^26.0.7",
+    "all-contributors-cli": "^6.17.0",
+    "eslint": "^7.5.0",
+    "jest": "^26.1.0",
     "npm-run-all": "^4.0.2",
-    "prettier": "^1.11.1",
-    "ts-jest": "^20.0.3",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.1.4",
     "typescript": "^3.9.7"
   },
   "jest": {
