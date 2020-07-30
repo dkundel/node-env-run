@@ -2,7 +2,9 @@ import * as Debug from 'debug';
 import * as fs from 'fs';
 import { resolve } from 'path';
 
-export type EnvironmentDictionary = { [key: string]: any };
+export type EnvironmentDictionary = {
+  [key: string]: string | undefined;
+};
 
 const debug = Debug('node-env-run');
 
@@ -46,15 +48,16 @@ export function getScriptToExecute(script: string, cwd: string): string | null {
  */
 export function setEnvironmentVariables(
   readValues: EnvironmentDictionary,
-  force: boolean = false
+  force = false
 ): void {
   if (force) {
     debug('Force overriding enabled');
   }
 
-  const envKeysToSet = Object.keys(readValues).filter(key => {
+  const envKeysToSet = Object.keys(readValues).filter((key) => {
     if (force && typeof readValues[key] !== 'undefined') {
-      if (typeof readValues[key] === 'string' && readValues[key].length === 0) {
+      const val = readValues[key];
+      if (typeof val === 'string' && val.length === 0) {
         debug(`Not overriding ${key}`);
         return false;
       }
@@ -66,11 +69,13 @@ export function setEnvironmentVariables(
     return !process.env[key];
   });
 
-  envKeysToSet.forEach(key => {
+  envKeysToSet.forEach((key) => {
     process.env[key] = readValues[key];
   });
 
-  debug(`Set the env variables: ${envKeysToSet.map(k => `"${k}"`).join(',')}`);
+  debug(
+    `Set the env variables: ${envKeysToSet.map((k) => `"${k}"`).join(',')}`
+  );
 }
 
 /**
@@ -100,8 +105,8 @@ const REGEX_NOT_REGULAR_CHARACTER = new RegExp(
  *
  * @param args list of arguments to pass to spawn
  */
-export function escapeArguments(args: string[]) {
-  const escapedArguments = args.map(arg => {
+export function escapeArguments(args: string[]): string[] {
+  const escapedArguments = args.map((arg) => {
     if (arg.match(REGEX_NOT_REGULAR_CHARACTER)) {
       return `"${arg}"`;
     }

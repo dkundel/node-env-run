@@ -6,9 +6,8 @@ jest.mock('./main.js', () => {}, { virtual: true });
 console.error = jest.fn();
 
 import { resolve } from 'path';
-
-import { getScriptToExecute, setEnvironmentVariables } from '../utils';
 import { init, parseArgs } from '../cli';
+import { getScriptToExecute, setEnvironmentVariables } from '../utils';
 
 const __setScriptToExecute = require('../utils').__setScriptToExecute;
 const __setMockFiles = require('fs').__setMockFiles;
@@ -36,7 +35,7 @@ describe('test command without necessary parameters', () => {
     const cli = init(parseArgs(CMD));
     expect(cli.isRepl).toBeFalsy();
     if (cli.isRepl === false) {
-      expect(cli.error.message).toBe('Failed to determine script to execute');
+      expect(cli?.error?.message).toBe('Failed to determine script to execute');
     }
   });
 

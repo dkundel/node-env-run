@@ -5,10 +5,8 @@ jest.mock('./main.js', () => {}, { virtual: true });
 // turn off error logs
 console.error = jest.fn();
 
-import { resolve } from 'path';
-
-import { getScriptToExecute, setEnvironmentVariables } from '../utils';
 import { init, parseArgs } from '../cli';
+import { getScriptToExecute, setEnvironmentVariables } from '../utils';
 
 const __setScriptToExecute = require('../utils').__setScriptToExecute;
 const __setMockFiles = require('fs').__setMockFiles;

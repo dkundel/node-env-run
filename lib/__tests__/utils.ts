@@ -1,4 +1,3 @@
-/* eslint-disable import/no-absolute-path */
 jest.mock('fs');
 jest.mock(
   '/fake/path/to/package.json',
