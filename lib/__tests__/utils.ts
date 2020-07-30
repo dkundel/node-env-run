@@ -1,46 +1,54 @@
-jest.mock('fs');
-jest.mock(
-  '/fake/path/to/package.json',
-  () => {
-    return {};
-  },
-  { virtual: true }
-);
-
 // turn off error logs
 console.error = jest.fn();
 
+import * as mockFs from 'mock-fs';
+import * as upath from 'upath';
 import {
   escapeArguments,
   getScriptToExecute,
   setEnvironmentVariables,
 } from '../utils';
 
-const __setMockFiles = require('fs').__setMockFiles;
+function normalizePath(path: string | null): string | null {
+  if (typeof path !== 'string') {
+    return path;
+  }
+
+  let normalized = upath.toUnix(path);
+  if (normalized.includes(':')) {
+    normalized = normalized.substr(normalized.indexOf(':') + 1);
+  }
+  return normalized;
+}
 
 describe('test getScriptExecuted', () => {
+  afterEach(() => {
+    mockFs.restore();
+  });
+
   test('returns null for missing package.json', () => {
     const returnVal = getScriptToExecute('.', '/fake/path/to/');
     expect(returnVal).toBeNull();
   });
 
   test('returns null for missing main entry', () => {
-    __setMockFiles({ '/fake/path/to/package.json': '{}' });
+    mockFs({ '/fake/path/to/package.json': '{}' });
     const returnVal = getScriptToExecute('.', '/fake/path/to/');
     expect(returnVal).toBeNull();
   });
 
   test('returns correct path derived from main', () => {
-    require('/fake/path/to/package.json').main = './lib/foo.js';
-    __setMockFiles({ '/fake/path/to/package.json': '{}' });
+    mockFs({
+      '/fake/path/to/package.json': `{"main": "./lib/foo.js"}`,
+    });
     const returnVal = getScriptToExecute('.', '/fake/path/to/');
-    expect(returnVal).toBe('/fake/path/to/lib/foo.js');
+    expect(normalizePath(returnVal)).toBe('/fake/path/to/lib/foo.js');
   });
 
   test('returns correct path manually entered', () => {
-    __setMockFiles({ '/fake/path/to/package.json': '{}' });
+    mockFs({ '/fake/path/to/package.json': '{}' });
     const returnVal = getScriptToExecute('../bar.js', '/fake/path/to/');
-    expect(returnVal).toBe('/fake/path/bar.js');
+    expect(normalizePath(returnVal)).toBe('/fake/path/bar.js');
   });
 });
 
