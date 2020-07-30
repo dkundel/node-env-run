@@ -1,24 +1,27 @@
-jest.mock('fs');
 jest.mock('../utils');
 jest.mock('./main.js', () => {}, { virtual: true });
 
 // turn off error logs
 console.error = jest.fn();
 
+import * as mockFs from 'mock-fs';
 import { init, parseArgs } from '../cli';
 import { getScriptToExecute, setEnvironmentVariables } from '../utils';
 
 const __setScriptToExecute = require('../utils').__setScriptToExecute;
-const __setMockFiles = require('fs').__setMockFiles;
 
 const CMD = 'path/to/node node-env-run . --force'.split(' ');
 
 describe('test command with missing env file', () => {
   beforeAll(() => {
-    __setMockFiles({});
+    mockFs({});
     __setScriptToExecute('./main.js');
 
     process.env['TEST_PREDEFINED'] = 'servus';
+  });
+
+  afterAll(() => {
+    mockFs.restore();
   });
 
   test('returns null', () => {

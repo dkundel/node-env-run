@@ -24,7 +24,7 @@ export function getScriptToExecute(script: string, cwd: string): string | null {
       return null;
     }
 
-    const pkg = require(pathToPkg);
+    const pkg = JSON.parse(fs.readFileSync(pathToPkg, 'utf8'));
 
     if (!pkg.main) {
       console.error('Could not find a "main" entry in the package.json');
