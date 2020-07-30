@@ -1,16 +1,15 @@
-jest.mock('fs');
 jest.mock('../utils');
 jest.mock('./main.js', () => {}, { virtual: true });
 
 // turn off error logs
 console.error = jest.fn();
 
+import * as mockFs from 'mock-fs';
 import { resolve } from 'path';
 import { init, parseArgs } from '../cli';
 import { getScriptToExecute, setEnvironmentVariables } from '../utils';
 
 const __setScriptToExecute = require('../utils').__setScriptToExecute;
-const __setMockFiles = require('fs').__setMockFiles;
 
 const CMD = 'path/to/node node-env-run foo-bar-bla.js --force'.split(' ');
 
@@ -27,8 +26,12 @@ TEST_PREDEFINED=moin
 describe('test command without necessary parameters', () => {
   beforeAll(() => {
     __setScriptToExecute(null);
-    __setMockFiles(FILES);
+    mockFs(FILES);
     process.env['TEST_PREDEFINED'] = 'servus';
+  });
+
+  afterAll(() => {
+    mockFs.restore();
   });
 
   test('returns null', () => {
