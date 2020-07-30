@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
-import { spawn } from 'child_process';
+import { spawn } from 'cross-spawn';
 import * as Debug from 'debug';
 import { start } from 'repl';
-
 import { init, parseArgs } from '../lib/cli';
-import { constructNewArgv } from '../lib/utils';
+import { escapeArguments } from '../lib/utils';
 
 const debug = Debug('node-env-run');
 
@@ -24,34 +23,36 @@ function runCommand(
 ): void {
   const shell: string | boolean = process.env.SHELL || true;
 
-  debug(`Execute command: ${cmd}`);
-  debug(`Using arguments: ${cmdArgs}`);
-  debug(`Using shell: ${shell}`);
+  debug(`Execute command: "${cmd}"`);
+  debug(`Using arguments: "%o"`, cmdArgs);
+  debug(`Using shell: "${shell}"`);
   const child = spawn(cmd, cmdArgs, {
     shell,
     stdio: 'inherit',
     env: process.env,
   });
-  child.on('exit', code => {
+  child.on('exit', (code: number) => {
     debug(`Child process exit with code ${code}`);
     process.exit(code);
   });
 }
 
+debug(`Raw args: %o`, process.argv);
 const args = parseArgs(process.argv);
-debug(`Parsed args: [${args.program._.join(', ')}]`);
+debug(`Parsed args: %o`, args.program._);
 debug(`Parsed script: "${args.script}"`);
 const cli = init(args);
 if (cli.isRepl) {
-  if (cli.node) {
+  if (cli.node && args.program.newArguments.length === 0) {
     start({});
   } else {
-    runCommand(args.program.exec, []);
+    const cmdArgs = escapeArguments(args.program.newArguments);
+    runCommand(args.program.exec, cmdArgs);
   }
 } else if (cli.script !== undefined) {
   const cmd = args.program.exec;
-  const cmdArgs = [cli.script, ...args.program.newArguments];
-  runCommand(args.program.exec, cmdArgs);
+  const cmdArgs = escapeArguments([cli.script, ...args.program.newArguments]);
+  runCommand(cmd, cmdArgs);
 } else {
   console.error(cli.error);
   process.exit(1);

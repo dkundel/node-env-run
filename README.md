@@ -9,10 +9,10 @@
 
 > Command-line tool to read `.env` files and execute scripts/commands after loading those environment variables
 
-* Uses [`dotenv`](https://npm.im/dotenv) under the hood
-* Easy to configure
-* Flexible command to execute
-* Let's you override existing environment variables
+- Uses [`dotenv`](https://npm.im/dotenv) under the hood
+- Easy to configure
+- Flexible command to execute
+- Let's you override existing environment variables
 
 <p align="center"><img alt="node-env-run example screenshot. Code below in Documentation section" src="https://cdn.rawgit.com/dkundel/node-env-run/5bc67d1a/assets/node-env-run-screenshot.png" height="350"/></p>
 
@@ -129,6 +129,46 @@ However, you can also use it with completely unrelated executables such as pytho
 
 ```bash
 nodenv app.py --exec python
+```
+
+## Caveats & Limitations
+
+### Additional Arguments
+
+If you want to pass additional flags/arguments to the script you are executing using `node-env-run`, you can use the empty `--` argument and follow it with any arguments you'd want to pass. For example:
+
+```bash
+nodenv index.js --exec "ts-node" -- --log-level debug
+```
+
+`--log-level debug` will be passed to `index.js`.
+
+If you want to do the same with a REPL like node or python you'll have to specify `REPL` explictly, due to some parsing behavior of yargs. For example:
+
+```bash
+nodenv REPL --exec node -- -e "console.log('hello world!')"
+```
+
+### Using Quotes and Escaping Characters
+
+Using quotes for escaping special characters should generally work out of the box. However, there is one edge case if you are trying to use double quotes (`"`) inside and want to preserve it. In that case you'll have to double escape it due to some inner workings of Node.js. For example:
+
+```bash
+nodenv REPL --exec echo -- 'A common greeting is "Hello World"'
+# outputs: A common greeting is Hello World
+
+nodenv REPL --exec echo -- 'A common greeting is \"Hello World\"'
+# outputs: A common greeting is "Hello World"
+```
+
+Similarly if you want to avoid variables to be interpolated you'll have to escape the `$` separately. For example:
+
+```bash
+nodenv REPL --exec echo -- '$PATH'
+# outputs your actual values stored in $PATH
+
+nodenv REPL --exec echo -- '\$PATH'
+# outputs: $PATH
 ```
 
 ## Contributors

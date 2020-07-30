@@ -1,6 +1,6 @@
+import * as Debug from 'debug';
 import * as fs from 'fs';
 import { resolve } from 'path';
-import * as Debug from 'debug';
 
 export type EnvironmentDictionary = { [key: string]: any };
 
@@ -87,4 +87,25 @@ export function constructNewArgv(
 ): string[] {
   const [node] = currentArgv;
   return [node, script, ...newArguments.split(' ')];
+}
+
+const REGULAR_SHELL_CHARACTERS = ['a-z', 'A-Z', '1-9', '-', '_', '/', ':', '='];
+const REGEX_NOT_REGULAR_CHARACTER = new RegExp(
+  `[^${REGULAR_SHELL_CHARACTERS.join('')}]`
+);
+
+/**
+ * Wraps arguments that contain characters that need to be escaped into quotes
+ * That way they will be passed correctly to the spawn command
+ *
+ * @param args list of arguments to pass to spawn
+ */
+export function escapeArguments(args: string[]) {
+  const escapedArguments = args.map(arg => {
+    if (arg.match(REGEX_NOT_REGULAR_CHARACTER)) {
+      return `"${arg}"`;
+    }
+    return arg;
+  });
+  return escapedArguments;
 }

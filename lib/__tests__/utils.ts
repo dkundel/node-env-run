@@ -11,7 +11,11 @@ jest.mock(
 // turn off error logs
 console.error = jest.fn();
 
-import { getScriptToExecute, setEnvironmentVariables } from '../utils';
+import {
+  escapeArguments,
+  getScriptToExecute,
+  setEnvironmentVariables,
+} from '../utils';
 
 const __setMockFiles = require('fs').__setMockFiles;
 
@@ -76,5 +80,32 @@ describe('test setEnvironmentVariables', () => {
     setEnvironmentVariables(toOverride, undefined);
     expect(process.env.TEST_ONE).toBe('hello');
     expect(process.env.TEST_TWO).toBe('foo');
+  });
+});
+
+describe('escapeArguments', () => {
+  test('keeps regular arguments untouched', () => {
+    const result = escapeArguments(['--verbose', '-l', 'debug']);
+    expect(result).toEqual(['--verbose', '-l', 'debug']);
+  });
+
+  test('keeps regular assignments', () => {
+    const result = escapeArguments(['--greeting=hello', '-l=debug']);
+    expect(result).toEqual([`--greeting=hello`, `-l=debug`]);
+  });
+
+  test('wraps arguments containing spaces', () => {
+    const result = escapeArguments(['--greeting', 'Hey how is it going?']);
+    expect(result).toEqual(['--greeting', `"Hey how is it going?"`]);
+  });
+
+  test('handles single quotes', () => {
+    const result = escapeArguments(['--greeting', `Hey what's up?`]);
+    expect(result).toEqual(['--greeting', `"Hey what's up?"`]);
+  });
+
+  test('does not touch existing double quotes', () => {
+    const result = escapeArguments(['--greeting', `Hey "Dominik"!`]);
+    expect(result).toEqual(['--greeting', `"Hey "Dominik"!"`]);
   });
 });

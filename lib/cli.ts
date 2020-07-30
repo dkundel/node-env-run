@@ -1,14 +1,13 @@
+import { stripIndent } from 'common-tags';
+import * as Debug from 'debug';
+import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as yargs from 'yargs';
-import * as dotenv from 'dotenv';
-import * as Debug from 'debug';
 import * as pkginfo from 'pkginfo';
-import { stripIndent, stripIndentTransformer } from 'common-tags';
-
+import * as yargs from 'yargs';
 import {
-  getScriptToExecute,
   EnvironmentDictionary,
+  getScriptToExecute,
   setEnvironmentVariables,
 } from './utils';
 
@@ -106,6 +105,8 @@ export function parseArgs(argv: string[]): CliArgs {
   const script: string | undefined = result.script;
   result.newArguments = result._;
 
+  debug('Yargs Result %o', result);
+
   return { program: result, script };
 }
 
@@ -133,7 +134,7 @@ export function init(args: CliArgs): Cli {
 
   setEnvironmentVariables(envValues, program.force);
 
-  if (!script) {
+  if (!script || script === 'REPL') {
     const node = args.program.exec === undefined;
     return { isRepl: true, node };
   }
