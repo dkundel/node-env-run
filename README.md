@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/node-env-run.svg?style=flat-square)](https://npmjs.com/packages/node-env-run) [![npm](https://img.shields.io/npm/dt/node-env-run.svg?style=flat-square)](https://npmjs.com/packages/node-env-run) [![npm](https://img.shields.io/npm/l/node-env-run.svg?style=flat-square)](/LICENSE) [!![Node CI](https://github.com/dkundel/node-env-run/workflows/Node%20CI/badge.svg)
+[![npm](https://img.shields.io/npm/v/node-env-run.svg?style=flat-square)](https://npmjs.com/package/node-env-run) [![npm](https://img.shields.io/npm/dt/node-env-run.svg?style=flat-square)](https://npmjs.com/packages/node-env-run) [![npm](https://img.shields.io/npm/l/node-env-run.svg?style=flat-square)](/LICENSE) [!![Node CI](https://github.com/dkundel/node-env-run/workflows/Node%20CI/badge.svg)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 <p align="center">
