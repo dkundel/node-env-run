@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/node-env-run.svg?style=flat-square)](https://npmjs.com/packages/node-env-run) [![npm](https://img.shields.io/npm/dt/node-env-run.svg?style=flat-square)](https://npmjs.com/packages/node-env-run) [![npm](https://img.shields.io/npm/l/node-env-run.svg?style=flat-square)](/LICENSE) [!![Node CI](https://github.com/dkundel/node-env-run/workflows/Node%20CI/badge.svg)
+[![npm](https://img.shields.io/npm/v/node-env-run.svg?style=flat-square)](https://npmjs.com/package/node-env-run) [![npm](https://img.shields.io/npm/dt/node-env-run.svg?style=flat-square)](https://npmjs.com/package/node-env-run) [![npm](https://img.shields.io/npm/l/node-env-run.svg?style=flat-square)](/LICENSE) ![Node CI](https://github.com/dkundel/node-env-run/workflows/Node%20CI/badge.svg)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 <p align="center">
@@ -67,7 +67,7 @@ This module uses under the hood the [`dotenv` module](https://www.npmjs.com/pack
 
 ### Usage examples:
 
-**Start up the `main` file in `package.json` with the enviornment variables from `.env`:**
+**Start up the `main` file in `package.json` with the environment variables from `.env`:**
 
 ```bash
 nodenv .
@@ -143,7 +143,7 @@ nodenv index.js --exec "ts-node" -- --log-level debug
 
 `--log-level debug` will be passed to `index.js`.
 
-If you want to do the same with a REPL like node or python you'll have to specify `REPL` explictly, due to some parsing behavior of yargs. For example:
+If you want to do the same with a REPL like node or python you'll have to specify `REPL` explicitly, due to some parsing behavior of yargs. For example:
 
 ```bash
 nodenv REPL --exec node -- -e "console.log('hello world!')"
